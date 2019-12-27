@@ -83,6 +83,7 @@ check that the last slice time is sane
 (it within tens of seconds over the month)
 
 
+### Generate images
 
     mkdir out
     n=0
@@ -95,3 +96,25 @@ check that the last slice time is sane
 
 
 Looks good.
+
+100 1024x1024 images
+
+On my page I use 320x320  so, scale a set
+
+first preserve originals and write protect
+(the `mogrify` command will overwrite by default)
+
+
+mkdir moon_320px
+# 320/1024  == 0.3125
+
+mogrify -scale 0.3125 -path ./moon_320px/  out/*.png 
+
+
+
+
+
+
+
+
+convert -delay 10 -loop 0 out/*.png gif/lunarcycle.gif
