@@ -1,5 +1,5 @@
-./gif   
-./moon_320px
-./orig
-./out
+gif/*
+moon_320px/*
+orig/*
+out/*
 
