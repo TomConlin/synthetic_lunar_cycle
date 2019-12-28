@@ -105,16 +105,35 @@ first preserve originals and write protect
 (the `mogrify` command will overwrite by default)
 
 
-mkdir moon_320px
-# 320/1024  == 0.3125
+mkdir moon_320px  
+     320/1024  == 0.3125  
 
-mogrify -scale 0.3125 -path ./moon_320px/  out/*.png 
+mogrify -scale 0.3125 -path ./moon_320px/  out/*.png   
 
-
-
-
+convert -delay 10 -loop 0 out/*.png gif/lunarcycle.gif  
 
 
+-----------------------------------------------------------------
 
+Getting a time to sync the image sequence periodicaly is necessary.
+there are effemeri... lunar phase tables...  
+or ... use `pom` (phase of the moon) an ancient BSD command 
+then make a hourly cron job ...   
+hourly because it is both easy and below the nyquist limit for 1/100th of a lunar phase.  
+(which means at some point in an image's interval the image should be the correct one)
 
-convert -delay 10 -loop 0 out/*.png gif/lunarcycle.gif
+m h  dom mon dow
+```
+47 * * * * cd .&& ln -s out/$(printf "%3.3i.png\n" $(pom|sed -n 's/.*(\([0-9]\+\)% of Full)/\1/p')) moon.png
+```
+
+pom is available via your favorite package manager
+according to the man page,
+ 
+```
+ The pom utility displays the current phase of the moon.  
+ Useful for selecting software completion target dates and  
+ predicting managerial behavior.
+
+```
+
