@@ -122,9 +122,8 @@ then make a hourly cron job ...
 hourly because it is both easy and below the nyquist limit for 1/100th of a lunar phase.  
 (which means at some point in an image's interval the image should be the correct one)
 
-m h  dom mon dow
 ```
-47 * * * * cd .&& ln -s out/$(printf "%3.3i.png\n" $(pom|sed -n 's/.*(\([0-9]\+\)% of Full)/\1/p')) moon.png
+0 * * * * ln -fns out/$(printf "%3.3i.png\n" $(pom|sed -n 's/.*(\([0-9]\+\)% of Full)/\1/p')) moon.png
 ```
 
 pom is available via your favorite package manager
