@@ -2,9 +2,9 @@
 ## Fabricate images of the moon's illuminated precent
 
 I have been fetching images from [USNO](http://api.usno.navy.mil/imagery/moon.png)
-for decades now.  
+for decades now.
 
-I should give then a break by generating a set once and keeping them.  
+I should give then a break by generating a set once and keeping them.
 I have looked around and not found anything I like better and most
 actual photos I like less.
 
@@ -12,26 +12,27 @@ These images I like are synthetic,
 USNO got data from [USGS](https://pdsmaps.wr.usgs.gov/maps.html)
 which may be [moved here](https://astrogeology.usgs.gov/)
 build a model and raytrace images on demand, this is why you can request
-images from any time past present or future.  
+images from any time past present or future.
 
 
 My goal here is to get a regular set of images over one lunar cycle
 labled so they may be reused as stunt doubles of other months.
 Yes.  I will lose up to the moment accuracy, wrong slant on the terminator etc,
 but will gain independence when USNO temporarily goes dark.
-Also get a lunar cycle labled by percent which I can use in other projects.  
+Also get a lunar cycle labled by percent which I can use in other projects.
 
 
-A synodic month is:      29.530588 Days  (avg)  
-Multiply by 24.0 is:    708.734112 Hours  
-Multiply by 60.0 is: 42,524.04672  Minutes  
+A synodic month is:         29.530588 Days  (avg)
+Multiply by 24.0 is:       708.734112 Hours
+Multiply by 60.0 is:    42,524.04672  Minutes
+Multiply by 60.0 is: 2,551,442.8032   Seconds
 
 If I made one hundred images (whole percents only) they
-would be only meaningfully updated every seven hours or
+would only be meaningfully updated every seven hours or
 several (3) times a day.
 
 This is overkill in temporal resolution for my use which is
-to notice if a good day for sidewalk astronomy is coming up soon.  
+to notice if a good day for sidewalk astronomy is coming up soon.
 Sounds like a plan; 100 images.
 
 Should be able to pick a date and time for a new moon and step
@@ -58,7 +59,7 @@ http://aa.usno.navy.mil/cgi-bin/aa_phases.pl?year=2018&month=1&day=1&nump=50&for
 
 make  a script [`newmoon_date_len.awk`](newmoon_date_len.awk)
 to find the actual lengths of each month and
-subtract the length of our "average" month.  
+subtract the length of our "average" month.
 
 - 2018 Jan 17 02:17:00	0.252745
 - 2018 Feb 15 21:05:00	0.0992731
@@ -72,14 +73,14 @@ subtract the length of our "average" month.
 - 2018 Oct 09 03:47:00	0.0214953
 - 2018 Nov 07 16:02:00	0.106912
 
-Assuming they cache,  
+Assuming they cache,
 months from the recent past may be quicker than months in the future.
 
 2018 Mar 17 13:12:00  looks good enough
 
 make a script [`generate_slices.awk`](generate_slices.awk) 
-to generate queries against the api  
-check that the last slice time is sane  
+to generate queries against the api
+check that the last slice time is sane
 (it within tens of seconds over the month)
 
 
@@ -105,34 +106,78 @@ first preserve originals and write protect
 (the `mogrify` command will overwrite by default)
 
 
-mkdir moon_320px  
-     320/1024  == 0.3125  
+mkdir moon_320px
+     320/1024  == 0.3125
 
-mogrify -scale 0.3125 -path ./moon_320px/  out/*.png   
+mogrify -scale 0.3125 -path ./moon_320px/  out/*.png
 
-convert -delay 10 -loop 0 out/*.png gif/lunarcycle.gif  
+convert -delay 10 -loop 0 out/*.png gif/lunarcycle.gif
 
 
 -----------------------------------------------------------------
 
 Getting a time to sync the image sequence periodicaly is necessary.
-there are effemeri... lunar phase tables...  
+there are effemeri... lunar phase tables...
 or ... use `pom` (phase of the moon) an ancient BSD command 
-then make a hourly cron job ...   
-hourly because it is both easy and below the nyquist limit for 1/100th of a lunar phase.  
+then make a hourly cron job ...
+hourly because it is both easy and below the nyquist limit for 1/100th of a lunar phase.
 (which means at some point in an image's interval the image should be the correct one)
 
 ```
-0 * * * * ln -fns out/$(printf "%3.3i.png\n" $(pom|sed -n 's/.*(\([0-9]\+\)% of Full)/\1/p')) moon.png
+0 * * * * mooncurrent.sh
 ```
 
 pom is available via your favorite package manager
 according to the man page,
  
 ```
- The pom utility displays the current phase of the moon.  
- Useful for selecting software completion target dates and  
+ The pom utility displays the current phase of the moon.
+ Useful for selecting software completion target dates and
  predicting managerial behavior.
 
 ```
+
+
+
+####################################################################
+
+
+New project
+-----------
+
+Consider the lunar cycle divided into
+    - 24 as in hours in a day
+    - 28 as in days in a month  ~ 4 weeks
+
+
+
+42,524.04672  Minutes / 24 = 1771.8352
+                           = 29.530588 hours -> 29:31:50.12
+
+42,524.04672  Minutes / 28 = 1518.715954286
+                           = 25.31193  hours -> 25:18:42.96
+
+really want to generate as many slicea as I choose ...
+rewrite  `generate_slices.awk`  to accept a steps variable
+
+
+    mkdir out24
+    n=0
+    for slice in $(./generate_slices.awk -v "steps=24"); do
+        echo ${n} "\t" $slice;
+        curl ${slice}>$(printf "out24/%03i.png" ${n});
+        ((n+=1));
+        sleep 3;
+    done
+
+    mkdir out28
+    n=0
+    for slice in $(./generate_slices.awk -v "steps=28"); do
+        echo ${n} "\t" $slice;
+        curl ${slice}>$(printf "out28/%03i.png" ${n});
+        ((n+=1));
+        sleep 3;
+    done
+
+# all fine & good but usno is offline for some months now
 
