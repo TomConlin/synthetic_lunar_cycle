@@ -8,7 +8,7 @@
 #                (%1.0f%% of Full)
 #   ]
 
-/^The Moon is Waxing /{  # 000-025
+/^The Moon is Waxing /{
     split($0,  p, "[%(]" )
     printf "%3.3i.png", p[2] / 2
 }
@@ -19,8 +19,8 @@
 
 /^The Moon is at the Last Quarter/{print "074.png"}
 
-/^The Moon is Waning  /{
-    ssplit($0,  p, "[%(]" )
+/^The Moon is Waning /{
+    split($0,  p, "[%(]" )
     printf "%3.3i.png", p[2] / 2 + 49
 }
 
