@@ -181,3 +181,15 @@ rewrite  `generate_slices.awk`  to accept a steps variable
 
 # all fine & good but usno is offline for some months now
 
+# shop for alternatives
+
+https://www.moonpage.com/index.html  
+
+https://www.moongiant.com  
+
+https://stardate.org/nightsky/moon  
+
+
+
+
+
