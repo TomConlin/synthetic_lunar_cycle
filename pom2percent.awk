@@ -21,6 +21,6 @@
 
 /^The Moon is Waning /{
     split($0,  p, "[%(]" )
-    printf "%3.3i.png", p[2] / 2 + 49
+    printf "%3.3i.png", 100 - (p[2] / 2)
 }
 
