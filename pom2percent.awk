@@ -2,11 +2,13 @@
 # pom2percent.awk <pomstring>
 
 # The Moon [is | was | will be]
-#   [Full |at the [First | Last] Quarter ] |
+#   [New |Full |at the [First | Last] Quarter ] |
 #   [[Waxing | Waning ]
 #           [Gibbous | Crescent] 
 #                (%1.0f%% of Full)
 #   ]
+
+/^The Moon is New/{print "000.png"}
 
 /^The Moon is Waxing /{
     split($0,  p, "[%(]" )
