@@ -179,9 +179,9 @@ rewrite  `generate_slices.awk`  to accept a steps variable
         sleep 3;
     done
 
-# all fine & good but usno is offline for some months now
+#### all fine & good but usno is offline for some months now
 
-# shop for alternatives
+#### shop for alternatives
 
 https://www.moonpage.com/index.html  
 
