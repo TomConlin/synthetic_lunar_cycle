@@ -1,14 +1,24 @@
 
-## Fabricate images of the moon's illuminated precent
+## Fabricate images of the moon's illuminated percent
+
+```
+2021 Oct.
+
+I am switching this repo to public in case it is of use to former users 
+of the very fine USNO service which has now been off line for years.
+Should they ask I will return this repo to private status.
+
+```
+
 
 I have been fetching images from [USNO](http://api.usno.navy.mil/imagery/moon.png)
-for decades now.
+for decades now. But they stop being reliable quite a while ago.  
 
 I should give then a break by generating a set once and keeping them.
 I have looked around and not found anything I like better and most
 actual photos I like less.
 
-These images I like are synthetic,
+These images I like are synthetic, (no atmosphere or clouds)
 USNO got data from [USGS](https://pdsmaps.wr.usgs.gov/maps.html)
 which may be [moved here](https://astrogeology.usgs.gov/)
 build a model and raytrace images on demand, this is why you can request
@@ -16,10 +26,10 @@ images from any time past present or future.
 
 
 My goal here is to get a regular set of images over one lunar cycle
-labled so they may be reused as stunt doubles of other months.
+labeled so they may be reused as stunt doubles of other months.
 Yes.  I will lose up to the moment accuracy, wrong slant on the terminator etc,
-but will gain independence when USNO temporarily goes dark.
-Also get a lunar cycle labled by percent which I can use in other projects.
+but will gain independence when USNO temporarily (or permanently) goes dark.
+Also get a lunar cycle labeled by percent which I can use in other projects.
 
 
 A synodic month is:         29.530588 Days  (avg)
@@ -50,7 +60,7 @@ API call looks like:
    http://api.usno.navy.mil/imagery/moon.png?date=5/28/1900&time=05:13:03.123
 
 For the sake of pointless precision I woulds like to select a month
-who's actual lenght is close to the average length of 29.530588 days.
+who's actual length is close to the average length of 29.530588 days.
 
 It should not matter which month
 get a list of new moons for 2018 from:
@@ -85,7 +95,7 @@ check that the last slice time is sane
 
 
 ### Generate images
-
+```
     mkdir out
     n=0
     for slice in $(./generate_slices.awk); do
@@ -94,7 +104,7 @@ check that the last slice time is sane
         ((n+=1));
         sleep 3;
     done
-
+```
 
 Looks good.
 
@@ -106,12 +116,13 @@ first preserve originals and write protect
 (the `mogrify` command will overwrite by default)
 
 
-mkdir moon_320px
+`mkdir moon_320px`
+
      320/1024  == 0.3125
 
-mogrify -scale 0.3125 -path ./moon_320px/  out/*.png
+`mogrify -scale 0.3125 -path ./moon_320px/  out/*.png`
 
-convert -delay 10 -loop 0 out/*.png gif/lunarcycle.gif
+`convert -delay 10 -loop 0 out/*.png gif/lunarcycle.gif`
 
 
 -----------------------------------------------------------------
@@ -128,7 +139,7 @@ hourly because it is both easy and below the nyquist limit for 1/100th of a luna
 ```
 
 pom is available via your favorite package manager
-according to the man page,
+and according to the man page ...
  
 ```
  The pom utility displays the current phase of the moon.
@@ -160,7 +171,7 @@ Consider the lunar cycle divided into
 really want to generate as many slicea as I choose ...
 rewrite  `generate_slices.awk`  to accept a steps variable
 
-
+```
     mkdir out24
     n=0
     for slice in $(./generate_slices.awk -v "steps=24"); do
@@ -178,10 +189,10 @@ rewrite  `generate_slices.awk`  to accept a steps variable
         ((n+=1));
         sleep 3;
     done
+```
+all fine & good but usno has  been offline for some months now ...
 
-#### all fine & good but usno is offline for some months now
-
-#### shop for alternatives
+shop for alternatives
 
 https://www.moonpage.com/index.html  
 
@@ -190,6 +201,7 @@ https://www.moongiant.com
 https://stardate.org/nightsky/moon  
 
 
+hmmm  no obvious replacement
 
 
 
