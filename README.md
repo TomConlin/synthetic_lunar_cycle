@@ -71,6 +71,7 @@ make  a script [`newmoon_date_len.awk`](newmoon_date_len.awk)
 to find the actual lengths of each month and
 subtract the length of our "average" month.
 
+```
 - 2018 Jan 17 02:17:00	0.252745
 - 2018 Feb 15 21:05:00	0.0992731
 - 2018 Mar 17 13:12:00	0.000662    <-- minimium in this set
@@ -82,6 +83,7 @@ subtract the length of our "average" month.
 - 2018 Sep 09 18:01:00	-0.123644
 - 2018 Oct 09 03:47:00	0.0214953
 - 2018 Nov 07 16:02:00	0.106912
+```
 
 Assuming they cache,
 months from the recent past may be quicker than months in the future.
@@ -153,12 +155,15 @@ and according to the man page ...
 ####################################################################
 
 
-New project
+# New project
 -----------
 
 Consider the lunar cycle divided into
     - 24 as in hours in a day
     - 28 as in days in a month  ~ 4 weeks
+
+In this case instead of realistic images,  
+I want to end up with outlines or stencils
 
 
 
@@ -168,7 +173,7 @@ Consider the lunar cycle divided into
 42,524.04672  Minutes / 28 = 1518.715954286
                            = 25.31193  hours -> 25:18:42.96
 
-really want to generate as many slicea as I choose ...
+really want to generate as many slices as I choose ...
 rewrite  `generate_slices.awk`  to accept a steps variable
 
 ```
@@ -190,7 +195,7 @@ rewrite  `generate_slices.awk`  to accept a steps variable
         sleep 3;
     done
 ```
-all fine & good but usno has  been offline for some months now ...
+all fine & good but USNO has apparently been offline for some months now ...
 
 shop for alternatives
 
@@ -201,7 +206,15 @@ https://www.moongiant.com
 https://stardate.org/nightsky/moon  
 
 
-hmmm  no obvious replacement
+hmmm  no obvious replacement.
+
+futz with the 100 images I have as approximates ...
+
+but ultimately with the time-line, materials and tools on hand  
+just went with drafting simple line cartoons.
+
+note: for a moon a day cartoon/stencil only need the 12 drawings 
+because each side is used and full new are plain circles.
 
 
 
